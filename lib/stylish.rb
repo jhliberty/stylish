@@ -1,5 +1,6 @@
 require "stylish/version"
+require "stylish/developer"
 
 module Stylish
-  # Your code goes here...
+  require 'stylish/engine' if defined?(::Rails)
 end

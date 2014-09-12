@@ -1,6 +1,6 @@
-require 'Stylish/developer/route'
-require 'Stylish/developer/path'
-require 'Stylish/developer/listing'
+require 'stylish/developer/route'
+require 'stylish/developer/path'
+require 'stylish/developer/listing'
 
 module Stylish
   module Developer
@@ -15,7 +15,7 @@ module Stylish
         Stylish::Developer.config
       end
 
-      def self.Stylish
+      def self.sprockets
         config.environment
       end
 
@@ -26,7 +26,7 @@ module Stylish
       def self.info_response
         body = {
           root: root,
-          paths: Stylish.paths
+          paths: sprockets.paths
         }.to_json
 
         headers = {

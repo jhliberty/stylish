@@ -12,15 +12,15 @@ module Stylish
         @asset ||= begin
                      parts = request_path.split('/')
 
-                     found = !!(Stylish.find_asset(request_path))
+                     found = !!(sprockets.find_asset(request_path))
 
                      until found || parts.empty?
                        test = parts.join('/')
-                       found = !!!(Stylish.find_asset(test).nil?)
+                       found = !!!(sprockets.find_asset(test).nil?)
                        parts.shift unless found
                      end
 
-                      Stylish.find_asset Array(parts).join('/')
+                      sprockets.find_asset Array(parts).join('/')
                    end
       end
 
@@ -28,12 +28,12 @@ module Stylish
         expanded_path.exist?
       end
 
-      def Stylish
-        self.class.Stylish
+      def sprockets
+        self.class.sprockets
       end
 
-      def self.Stylish
-        @Stylish ||= Stylish::Developer.config.environment
+      def self.sprockets
+        @sprockets ||= Stylish::Developer.config.environment
       end
 
       def expanded_path
@@ -44,8 +44,8 @@ module Stylish
         expanded_path.exist?
       end
 
-      def Stylish_asset
-        Stylish.find_asset(asset)
+      def sprockets_asset
+        sprockets.find_asset(asset)
       end
 
       def meta?

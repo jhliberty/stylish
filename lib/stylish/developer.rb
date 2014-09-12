@@ -1,5 +1,5 @@
-require 'Stylish/developer/server'
-require 'Stylish/developer/config'
+require 'stylish/developer/server'
+require 'stylish/developer/config'
 
 module Stylish
   module Developer

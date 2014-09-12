@@ -1,13 +1,16 @@
-require 'sprockets/developer'
+require 'Stylish/developer/server'
+require 'Stylish/developer/config'
 
 module Stylish
   module Developer
-    def self.config *args, &block
-      Sprockets::Developer.send(:config, *args, &block)
+    def self.server
+      Stylish::Developer::Server
     end
 
-    def self.server
-      Sprockets::Developer.server
+    def self.config
+      @@config ||= Stylish::Developer::Config.new
+      yield(@@config) if block_given?
+      @@config
     end
   end
 end

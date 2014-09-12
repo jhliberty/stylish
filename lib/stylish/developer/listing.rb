@@ -1,4 +1,4 @@
-module Sprockets
+module Stylish
   module Developer
     class Listing
       attr_reader :request_path, :request_type
@@ -22,8 +22,8 @@ module Sprockets
       end
 
       def response
-        root = Sprockets::Developer.config.root
-        prefix = Sprockets::Developer.config.base_url
+        root = Stylish::Developer.config.root
+        prefix = Stylish::Developer.config.base_url
 
         walk = lambda do |path_node|
           relative = path_node.relative_path_from(root)
@@ -59,12 +59,13 @@ module Sprockets
       end
 
       def expanded_path
-        Pathname(request_path).expand_path(Sprockets::Developer.config.root)
+        Pathname(request_path).expand_path(Stylish::Developer.config.root)
       end
 
       def response_headers
         {
-          "Content-Length" => content_length
+          "Content-Length" => "#{content_length}",
+          "Content-Type" => "application/json"
         }
       end
 

@@ -1,4 +1,4 @@
-module Sprockets
+module Stylish
   module Developer
     class Route
       def self.request(env)
@@ -12,24 +12,27 @@ module Sprockets
       end
 
       def prefix
-        Sprockets::Developer.config.base_url
+        Stylish::Developer.config.base_url
       end
 
       def respond
         case
         when %w{meta content compiled}.include?(request_type)
           path_handler.to_rack_response()
-        when %w{list}.include?(request_type)
+        when request_type == "list"
           listing_handler.to_rack_response()
+        when request_type == "info"
+          Stylish::Developer::Server.info_response
         end
       end
 
+
       def listing_handler
-        @listing_handler ||= Sprockets::Developer::Listing.new(actual_path, request_type)
+        @listing_handler ||= Stylish::Developer::Listing.new(actual_path, request_type)
       end
 
       def path_handler
-        @path_handler ||= Sprockets::Developer::Path.new(actual_path, request_type)
+        @path_handler ||= Stylish::Developer::Path.new(actual_path, request_type)
       end
 
       def actual_path
@@ -37,6 +40,7 @@ module Sprockets
       end
 
       def request_type
+        return "info" if request.path.match(/^#{prefix}\/info$/)
         request.path[/^#{ prefix }\/(\w+)\/(.+)$/, 1]
       end
     end

@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
     
   spec.add_dependency 'hashie'
   spec.add_dependency 'sprockets', '>= 2.0.0'
+  spec.add_dependency 'commander'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

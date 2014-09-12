@@ -1,4 +1,4 @@
-module Sprockets
+module Stylish
   module Developer
     class Path
       attr_reader :request_path, :request_type
@@ -12,15 +12,15 @@ module Sprockets
         @asset ||= begin
                      parts = request_path.split('/')
 
-                     found = !!(sprockets.find_asset(request_path))
+                     found = !!(Stylish.find_asset(request_path))
 
                      until found || parts.empty?
                        test = parts.join('/')
-                       found = !!!(sprockets.find_asset(test).nil?)
+                       found = !!!(Stylish.find_asset(test).nil?)
                        parts.shift unless found
                      end
 
-                      sprockets.find_asset Array(parts).join('/')
+                      Stylish.find_asset Array(parts).join('/')
                    end
       end
 
@@ -28,24 +28,24 @@ module Sprockets
         expanded_path.exist?
       end
 
-      def sprockets
-        self.class.sprockets
+      def Stylish
+        self.class.Stylish
       end
 
-      def self.sprockets
-        @sprockets ||= Sprockets::Developer.config.environment
+      def self.Stylish
+        @Stylish ||= Stylish::Developer.config.environment
       end
 
       def expanded_path
-        Pathname(request_path).expand_path(Sprockets::Developer.config.root)
+        Pathname(request_path).expand_path(Stylish::Developer.config.root)
       end
 
       def asset_exists?
         expanded_path.exist?
       end
 
-      def sprockets_asset
-        sprockets.find_asset(asset)
+      def Stylish_asset
+        Stylish.find_asset(asset)
       end
 
       def meta?
@@ -62,7 +62,8 @@ module Sprockets
 
       def response_headers
         {
-          "Content-Length" => Rack::Utils.bytesize(response_body)
+          "Content-Length"  => "#{Rack::Utils.bytesize(response_body)}",
+          "Content-Type"    => content_type
         }
       end
 
@@ -79,10 +80,25 @@ module Sprockets
                              when compiled?
                                asset.to_s
                              when meta?
-                               meta.merge(content: asset.pathname.read,
-                                          compiled: asset.to_s).to_json
+                               meta.to_json
                              end
                            end
+      end
+
+      def raw_asset_content
+        begin
+          asset.pathname.read
+        rescue => exception
+          "Error reading asset content:\n\n#{exception.message}"
+        end
+      end
+
+      def compiled_asset_content
+        begin
+          asset.to_s
+        rescue => exception
+          "Error compiling asset content:\n\n#{ exception.message }"
+        end
       end
 
       def extension
@@ -93,14 +109,29 @@ module Sprockets
         asset.content_type
       end
 
+      def relative_pathname
+        Pathname(asset.pathname.relative_path_from(Stylish::Developer.config.root))
+      end
+
+      def prefix
+        Stylish::Developer.config.base_url
+      end
+
       def meta
         {
           logical_path: asset.logical_path,
-          mtime: asset.mtime,
+          mtime: asset.mtime.to_i.to_s,
           digest: asset.digest,
-          pathname: asset.pathname.to_s,
-          size: asset.bytesize,
-          dependencies: asset.dependencies
+          pathname: relative_pathname.to_s,
+          size: asset.bytesize.to_s,
+          urls: {
+            meta_url: "#{ prefix }/meta/#{relative_pathname}",
+            compiled_url: "#{ prefix }/compiled/#{relative_pathname}",
+            content_url: "#{ prefix }/content/#{relative_pathname}"
+          },
+          dependencies: asset.dependencies.map do |dependency|
+            dependency.logical_path
+          end
         }
       end
 

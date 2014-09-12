@@ -1,4 +1,4 @@
-module Sprockets
+module Stylish
   module Developer
     class Config < Struct.new(:environment, :root, :base)
       def base_url

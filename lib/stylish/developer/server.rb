@@ -20,7 +20,7 @@ module Stylish
       end
 
       def self.root
-        Pathname(config.root)
+        Pathname(config.root || Dir.pwd())
       end
 
       def self.info_response

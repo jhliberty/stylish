@@ -1,5 +1,6 @@
 require 'stylish/developer/server'
 require 'stylish/developer/config'
+require 'stylish/developer/reload'
 
 module Stylish
   module Developer

@@ -17,15 +17,17 @@ module Stylish
 
       def respond
         case
+
         when %w{meta content compiled}.include?(request_type)
           path_handler.to_rack_response()
+
         when request_type == "list"
           listing_handler.to_rack_response()
+
         when request_type == "info"
           Stylish::Developer::Server.info_response
         end
       end
-
 
       def listing_handler
         @listing_handler ||= Stylish::Developer::Listing.new(actual_path, request_type)

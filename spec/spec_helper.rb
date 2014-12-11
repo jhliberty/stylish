@@ -10,6 +10,12 @@ Rails.backtrace_cleaner.remove_silencers!
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+module Stylish
+  def self.fixtures_path
+    Pathname(File.dirname(__FILE__)).join("fixtures")
+  end
+end
+
 RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = true

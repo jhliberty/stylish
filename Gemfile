@@ -6,4 +6,7 @@ gemspec
 group :test, :development do
   gem 'coffee-rails'
   gem 'sass-rails'
+  gem 'spawnling'
+  gem 'faye'
+  gem 'listen'
 end

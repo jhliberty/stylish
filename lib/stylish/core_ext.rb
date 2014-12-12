@@ -1,6 +1,15 @@
+require 'hashie'
+require 'pathname'
+
 class Hash
   def to_mash
     Hashie::Mash.new(self)
+  end
+end
+
+class Pathname
+  def to_pathname
+    self
   end
 end
 

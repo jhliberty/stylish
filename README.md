@@ -1,29 +1,25 @@
-# Stylish
+# Stylish: the front-end theming laboratory 
 
-TODO: Write a gem description
+Frameworks such as Semantic-UI, Bootstrap, Foundation, or others,
+provide a great starting point for responsive, decent looking websites.
+There are plenty of off the shelf themes one can purchase as well, but
+in my experience working with many of them they start to fall apart when
+you try to decompose them into re-usable components in your own front
+end architecture, or turn them into templates to be rendered in a Rails
+app for example.
 
-## Installation
+Stylish is a set of tools aimed toward front end developers who are
+developing custom themes, components, or widgets using popular CSS Frameworks as their base. 
+It helps you design, develop, distribute, maintain, update, and sell these themes.
 
-Add this line to your application's Gemfile:
+Stylish helps theme developers organize their work in such a way that
+makes their themes and example pages extremely easy to incorporate into
+the many different development frameworks which will attempt to break 
+them apart and use them.
 
-    gem 'stylish'
+### The stylish development server 
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install stylish
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+TODO: Document the process of:
+- deploying to heroku
+- customizing the configuration
+- creating a new things

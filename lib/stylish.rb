@@ -9,8 +9,7 @@ require "stylish/version"
 require "stylish/configuration"
 require "stylish/developer"
 require "stylish/manifest"
-require "stylish/models/package"
-require "stylish/models/library"
+require "stylish/models"
 
 module Stylish
   require 'stylish/engine' if defined?(::Rails)

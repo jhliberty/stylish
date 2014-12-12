@@ -33,6 +33,5 @@ module Stylish
 
       config.merge!(payload)
     end
-
   end
 end

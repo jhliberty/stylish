@@ -9,6 +9,7 @@ require "stylish/version"
 require "stylish/configuration"
 require "stylish/developer"
 require "stylish/manifest"
+require "stylish/fs"
 require "stylish/models"
 require "stylish/util"
 

@@ -9,13 +9,40 @@ module Stylish
 
     attribute :name, String
     attribute :root, Pathname
-    attribute :packages, Array[Stylish::Package]
+    attribute :packages, Array['Stylish::Package']
 
     class << self
       attr_accessor :loaded
     end
 
     self.loaded = Set.new if self.loaded.nil?
+
+    def packages
+      super.tap do |list|
+        list.map! {|p| p.library = self; p }
+      end
+    end
+
+    def create_package(attributes, options={})
+      library = self
+
+      Stylish::Package.new(attributes).tap do |p|
+        p.library = library
+        p.initialize_folder_structure if !p.root.exist?
+      end
+    end
+
+    def find_package(query)
+      if query.is_a?(Hash)
+        query = query[:name]
+      end
+
+      packages.detect {|package| package.name == query || package.slug == query}
+    end
+
+    def slug
+      name.to_s.parameterize.downcase
+    end
 
     # Loads a deserialized library cache, which we expect to
     # be a Hash that contains at least an array of library records.
@@ -52,7 +79,7 @@ module Stylish
         if library.exist?
           structure = Stylish.util.deserialize(library)
         else
-          structure = {packages: (path.children
+          structure = {root: path, packages: (path.children
             .select(&:directory?)
             .select {|p| p.join('manifest.json').exist? || p.join('manifest.yml').exist? }
             .map do |p|

@@ -1,3 +1,4 @@
+
 module Stylish
   # A `Stylish::Package` is a member of the `Stylish::Library` which
   # sits on top of a collection of components, scripts, and a base
@@ -8,17 +9,55 @@ module Stylish
 
     attribute :name, String
     attribute :version, String
+    attribute :slug, String
     attribute :root, Pathname
     attribute :tags, Array[String]
 
+    attribute :library, 'Stylish::Library'
+
 
     def after_initialize
-      if !(root && root.exist?)
-        raise 'Invalid package. Must include a root property which points to a path that contains the package manifest'
+      set_slug_from(:name)
+
+      if !self.root
+        self.root = library_root.try(:join, slug)
       end
 
-      self.name ||= manifest.name
-      self.version ||= manifest.version
+      if folder_exists?
+        self.name ||= manifest.name
+        self.version ||= manifest.version
+      end
+
+      set_slug_from(:name)
+    end
+
+    def library
+      super || Stylish::Library.loaded.to_a.last
+    end
+
+    def initialize_folder_structure
+      raise 'Can not determine package root' unless root
+
+      FileUtils.mkdir_p root
+      FileUtils.mkdir_p root.join('templates')
+      FileUtils.mkdir_p root.join('scripts')
+      FileUtils.mkdir_p root.join('stylesheets')
+
+      unless root.join("manifest.json").exist?
+        root.join("manifest.json").open("w+") do |fh|
+          fh.write({name: name,
+                   version: version || "0.0.1",
+                   categories: %w(Headers, Footers)}.to_json)
+        end
+      end
+    end
+
+    def library_root
+      library.try(:root)
+    end
+
+    def folder_exists?
+      root && root.exist?
     end
 
     def manifest
@@ -29,7 +68,7 @@ module Stylish
                         root.join("manifest.yml")
                       end
 
-      @manifest ||= Stylish::Manifest.new(manifest_path)
+      @manifest ||= Stylish::Manifest.new(manifest_path) if manifest_path
     end
   end
 end

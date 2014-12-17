@@ -13,8 +13,8 @@ module Stylish
       @root             = options.fetch(:root) { self.path && self.path.dirname }
 
       @templates        = options.fetch(:templates) { manifest.templates || "templates" }
-      @stylesheets      = options.fetch(:stylesheets) { manifest.templates || "stylesheets" }
-      @scripts          = options.fetch(:scripts) { manifest.templates || "scripts" }
+      @stylesheets      = options.fetch(:stylesheets) { manifest.stylesheets || "stylesheets" }
+      @scripts          = options.fetch(:scripts) { manifest.scripts || "scripts" }
     end
 
     def name

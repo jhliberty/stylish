@@ -3,8 +3,12 @@ module Stylish
     extend ActiveSupport::Concern
 
     included do
-      require 'virtus' unless defined?(Virtus)
-      include Virtus.model
+      unless defined?(Virtus)
+        require 'inflecto'
+        require 'virtus'
+      end
+
+      include Virtus.model(finalize: false)
       include Initializers
     end
 
@@ -19,19 +23,24 @@ module Stylish
         # TODO
       end
 
+      def set_slug_from(column=:name)
+        self.slug = send(column).to_s.downcase.parameterize if self.slug.to_s.length == 0
+      end
+
     end
   end
 
   module Models
     def self.load_all
-      require 'stylish/models/package'
       require 'stylish/models/library'
+      require 'stylish/models/package'
       require 'stylish/models/theme'
       require 'stylish/models/component'
       require 'stylish/models/layout'
       require 'stylish/models/stylesheet'
       require 'stylish/models/script'
       require 'stylish/models/template'
+      Virtus.finalize
     end
   end
 end

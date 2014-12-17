@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Stylish::Models::Package do
+describe Stylish::Package do
   let(:package) do
-    Stylish::Models::Package.new(root: Stylish.fixtures_path.join("test-theme"))
+    Stylish::Package.new(root: Stylish.fixtures_path.join("test-theme"))
   end
 
   it "has a manifest" do

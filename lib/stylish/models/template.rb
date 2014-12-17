@@ -1,7 +1,8 @@
 module Stylish
-  module Models
-    class Template
-      include Virtus.model
-    end
+  class Template
+    include Stylish::Model
+
+    attribute :path, String
+    attribute :type, String
   end
 end

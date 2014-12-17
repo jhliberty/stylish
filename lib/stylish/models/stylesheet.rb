@@ -1,7 +1,8 @@
 module Stylish
-  module Models
-    class Stylesheet
-      include Virtus.model
-    end
+  class Stylesheet
+    include Stylish::Model
+
+    attribute :path, String
+    attribute :type, String
   end
 end

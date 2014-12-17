@@ -1,11 +1,9 @@
 module Stylish
-  module Models
-    class Layout
-      include Virtus.model
+  class Layout
+    include Stylish::Model
 
-      attribute :name, String
-      attribute :package, Stylish::Models::Package
-      attribute :components, Array[Stylish::Models::Component]
-    end
+    attribute :name, String
+    attribute :package, Stylish::Package
+    attribute :components, Array[Stylish::Component]
   end
 end

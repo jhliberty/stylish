@@ -1,10 +1,8 @@
 module Stylish
-  module Models
-    class Component
-      include Virtus.model
+  class Component
+    include Stylish::Model
 
-      attribute :name, String
-      attribute :category, String
-    end
+    attribute :name, String
+    attribute :category, String
   end
 end

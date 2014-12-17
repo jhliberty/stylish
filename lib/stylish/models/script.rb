@@ -1,7 +1,8 @@
 module Stylish
-  module Models
-    class Script
-      include Virtus.model
-    end
+  class Script
+    include Stylish::Model
+
+    attribute :path, String
+    attribute :type, String
   end
 end

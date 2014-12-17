@@ -1,4 +1,3 @@
-require "virtus"
 require "hashie"
 require "singleton"
 require "set"
@@ -15,6 +14,10 @@ require "stylish/util"
 
 module Stylish
   require 'stylish/engine' if defined?(::Rails)
+
+  def self.util
+    Stylish::Util
+  end
 
   def self.config
     Stylish::Configuration.instance

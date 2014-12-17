@@ -1,10 +1,8 @@
 module Stylish
-  module Models
-    class Theme
-      include Virtus.model
+  class Theme
+    include Stylish::Model
 
-      attribute :name, String
-      attribute :version, String
-    end
+    attribute :name, String
+    attribute :version, String
   end
 end

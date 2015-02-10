@@ -1,6 +1,7 @@
 require 'stylish/developer/route'
 require 'stylish/developer/path'
 require 'stylish/developer/listing'
+require 'stylish/developer/modification'
 
 module Stylish
   module Developer
@@ -21,19 +22,6 @@ module Stylish
 
       def self.root
         Pathname(config.root || Dir.pwd())
-      end
-
-      def self.info_response
-        body = {
-          root: root,
-          paths: sprockets.paths
-        }.to_json
-
-        headers = {
-          "Content-Length" => Rack::Utils.bytesize(body)
-        }
-
-        [200, headers, [body]]
       end
     end
   end

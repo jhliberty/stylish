@@ -22,29 +22,44 @@ module Stylish
       end
 
       def respond
-        case
+        data = case
         when %w{meta content compiled}.include?(request_type)
           path_handler.to_rack_response()
 
         when request_type == "list"
           listing_handler.to_rack_response()
-
         when request_type == "info"
           info_handler_rack_response
-
         when %w(create update delete).include?(request_type)
           modification_handler.to_rack_response()
         else
-          [400, {}, ['Not found']]
+          [404, {}, ['Not found']]
         end
+
+        status, headers, body = data
+
+        headers["Content-Length"]                 = Rack::Utils.bytesize(body[0])
+        headers["Access-Control-Allow-Origin"]    = "*"
+        headers["Access-Control-Allow-Methods"]   = "GET, POST, PUT"
+
+        [status, headers, body]
       end
 
       def info_handler_rack_response
-        Stylish::Developer::Server.info_response
+        body = {
+          root: Stylish::Developer.server.root,
+          paths: Stylish::Developer.server.sprockets.paths
+        }.to_json
+
+        headers = {
+          "Content-Type" => "application/json"
+        }
+
+        [200, headers, [body]]
       end
 
       def modification_handler
-        @modification_handler ||= Stylish::Developer::Modification.new(actual_path, request)
+        @modification_handler ||= Stylish::Developer::Modification.new(actual_path, request_type, request)
       end
 
       def listing_handler

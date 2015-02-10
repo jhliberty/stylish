@@ -15,7 +15,6 @@ module Stylish
 
     attribute :library, 'Stylish::Library'
 
-
     def after_initialize
       set_slug_from(:name)
 

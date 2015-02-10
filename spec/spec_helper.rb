@@ -14,6 +14,10 @@ module Stylish
   def self.fixtures_path
     Pathname(File.dirname(__FILE__)).join("fixtures")
   end
+
+  def self.test_javascript_path
+    Pathname(File.dirname(__FILE__)).join("dummy","app","assets","javascripts")
+  end
 end
 
 RSpec.configure do |config|

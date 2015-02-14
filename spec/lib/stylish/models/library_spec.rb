@@ -26,7 +26,8 @@ describe Stylish::Library do
   end
 
   it "lets me find a package by slug" do
-    expect(library.find_package("stylish-test-theme")).to be_a(Stylish::Package)
+    pkg = library.find_package("stylish-test-theme")
+    expect(pkg).to be_a(Stylish::Package)
   end
 
 end

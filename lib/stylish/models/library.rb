@@ -13,6 +13,18 @@ module Stylish
 
     class << self
       attr_accessor :loaded
+
+      def current
+        first = loaded.first
+        return first if first
+
+        pwd = Pathname(Dir.pwd)
+
+        if pwd.join("library").exist?
+          Stylish::Library.load_from_disk(pwd.join("library"))
+          loaded.first
+        end
+      end
     end
 
     self.loaded = Set.new if self.loaded.nil?

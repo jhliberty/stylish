@@ -28,18 +28,30 @@ module Stylish
       end
 
     end
+
+    module ClassMethods
+      def browse(path, params={})
+        binding.pry
+      end
+    end
   end
 
   module Models
+    Types = %w(library package theme component layout stylesheet script template)
+
+    def self.lookup(model_alias)
+      a = model_alias.singularize.downcase
+
+      if Types.include?(a)
+        Stylish.const_get(a.camelize)
+      end
+    end
+
     def self.load_all
-      require 'stylish/models/library'
-      require 'stylish/models/package'
-      require 'stylish/models/theme'
-      require 'stylish/models/component'
-      require 'stylish/models/layout'
-      require 'stylish/models/stylesheet'
-      require 'stylish/models/script'
-      require 'stylish/models/template'
+      Types.each do |type|
+        require "stylish/models/#{ type }"
+      end
+
       Virtus.finalize
     end
   end

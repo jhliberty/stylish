@@ -30,6 +30,10 @@ module Stylish
       set_slug_from(:name)
     end
 
+    def to_hash
+      super.tap {|h| h.delete(:library) }
+    end
+
     def library
       super || Stylish::Library.loaded.to_a.last
     end

@@ -28,6 +28,8 @@ module Stylish
 
         when request_type == "list"
           listing_handler.to_rack_response()
+        when request_type == "models"
+          models_handler.to_rack_response()
         when request_type == "info"
           info_handler_rack_response
         when %w(create update delete).include?(request_type)
@@ -38,17 +40,14 @@ module Stylish
 
         status, headers, body = data
 
-        headers["Content-Length"]                 = Rack::Utils.bytesize(body[0])
-        headers["Access-Control-Allow-Origin"]    = "*"
-        headers["Access-Control-Allow-Methods"]   = "GET, POST, PUT"
-
         [status, headers, body]
       end
 
       def info_handler_rack_response
         body = {
-          root: Stylish::Developer.server.root,
-          paths: Stylish::Developer.server.sprockets.paths
+          root: Stylish::Developer.server.root.to_s,
+          sprockets_paths: Stylish::Developer.server.sprockets.paths,
+          library: Stylish::Developer.config.library.as_json
         }.to_json
 
         headers = {
@@ -56,6 +55,15 @@ module Stylish
         }
 
         [200, headers, [body]]
+      end
+
+      def models_handler
+        parts   = actual_path.split("/")
+        action  = parts.shift
+        prefix  = parts.shift
+        path    = parts.join("/")
+
+        @models_handler ||= Stylish::Developer::ModelDelegator.new(path, action, prefix, request)
       end
 
       def modification_handler

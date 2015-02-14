@@ -6,20 +6,27 @@ require 'bundler'
 Bundler.require(:default, :development)
 
 require 'stylish'
-require 'commander/import'
 require 'pry'
 
-program :name, "Stylish"
-program :description, "Stylish Development Server"
-program :version, "0.0.1"
+if ARGV.include?("console")
+  Pry.start
+else
+  require 'commander/import'
 
-command :start do |c|
-  c.syntax = 'stylish start [options]'
-  c.description = 'manually start the watcher process'
+  program :name, "Stylish"
+  program :description, "Stylish Development Server"
+  program :version, "0.0.1"
 
-  c.option '--root PATH', 'Specify the root to observer'
+  command :start do |c|
+    c.syntax = 'stylish start [options]'
+    c.description = 'manually start the watcher process'
 
-  c.action do |args, options|
-    Stylish::Developer::Reload.start(root: options.root)
+    c.option '--library-root PATH', 'Specify the library root path'
+
+    c.action do |args, options|
+      Stylish::Developer::Environment.start(library_root: options.library_root)
+    end
   end
 end
+
+

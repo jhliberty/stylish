@@ -1,13 +1,31 @@
-Link = require("react-router").Link
-Editor = require "../components/editor"
+stylish = require("../apis/index").stylish
 
-module.exports = 
+TiledGrid = require("../components/tiled_grid")
+
+module.exports = React.createClass 
   displayName: "HomePage"
+  
+  getInitialState: ->
+    packages: []
+  
+  componentDidMount: ->
+    page = @
+    stylish.browsePackages().then (response)->
+      page.setState(packages: response)
+
+  showPackage: (pkg)->
+    <div className="ui card" key={pkg.slug}>
+      {pkg.name}
+    </div>
 
   render: ->
-    <h1>what the fuck</h1>
+    <div className="ui body">
+      <div className="ui header">
+        <h4>Stylish Packages</h4>
+      </div>
 
-  onEditorChange: ->
+      <TiledGrid perRow=4 items={@state.packages} formatter={@showPackage} itemClass="stylish-package"/>
+    </div>
 
   statics:
     willTransitionTo: ->

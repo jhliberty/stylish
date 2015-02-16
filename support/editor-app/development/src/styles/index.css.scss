@@ -221,31 +221,9 @@ a:hover {
   width: 100%;
 }
 
-#main .page .main.container {
+#main .main.container {
   padding-top: 24px;
   width: 85%;
-}
-
-
-// Sidebar Settings
-.ui.sidebar .item {
-  width: 100%;
-}
-
-.ui.sidebar .item {
-  text-align: left;
-  font-size: .875rem;
-  padding: .5rem;
-}
-
-.ui.sidebar .header {
-  font-size: .9rem;
-  text-align: left;
-}
-
-.ui.sidebar .menu .item {
-  font-size: .875rem;
-  opacity: 0.875;
 }
 
 .container {
@@ -259,69 +237,4 @@ a:hover {
   padding-bottom: 40px;
 }
 
-.header.segment {
-  position: relative;
-  z-index: 2;
-}
-
-.ui.list .header {
-  font-weight: bold;
-}
-
-.ui.list .item p {
-  font-weight: normal;
-}
-
-.main.container .section-header {
-  margin-top: 24px;
-}
-
-.section-nav .small.centered {
-  font-size: 0.8em;
-  text-align: center;
-  padding-left: 100px;
-}
-
-.main.container .section-diagram img {
-  width: 95%;
-}
-
-
-// Segments
-
-.ui.segment .ui.ribbon.label {
-  margin-bottom: 1.0rem; 
-}
-
-.wireframe-tiles .ui.cards .card {
-  min-height: 330px;
-  max-height: 330px;
-}
-
-.wireframe-tiles .ui.cards .card img {
-  height: 225px;
-  max-height: 225px;
-}
-
-code.annotations {
-  display: none;
-}
-
-.domain-concept-diagram .diagram-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 40px;
-}
-
-.domain-concept-diagram .diagram-container .svg-wrapper {
-  width: 100%;
-  height: 600px;
-}
-
-.domain-concept-diagram .diagram-container .svg-annotator {
-  position: absolute;
-  top: 25px;
-  right: 50px;
-  width: 350px;
-}
+@import "./components/tiled_grid.css.scss";

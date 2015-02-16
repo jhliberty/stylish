@@ -1,7 +1,9 @@
 module Stylish
   module Developer
     class ModelDelegator
-      attr_reader :path, :action, :request, :code, :library, :prefix, :parts
+      attr_reader :path, :action, :request, :library, :prefix, :parts
+
+      attr_accessor :code
 
       def initialize(path, action, prefix, request, library=nil)
         @path       = path
@@ -20,7 +22,7 @@ module Stylish
         when prefix == "packages" && action == "show"
           slug = parts.first
           package = library.find_package(slug)
-          package.to_hash
+          package.to_hash(true)
         else
           self.code = 400
 

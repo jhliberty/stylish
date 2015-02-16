@@ -4,8 +4,14 @@ class Api
     @host = options.host
 
   get: (endpoint)->
-    $.get("http://topgrading.dev" + (@base || "/apis/architects") + "/#{ endpoint }")
+    $.get("http://localhost:8080/stylish/#{endpoint}")
+
+  browsePackages: ->
+    @get("models/browse/packages")
+
+  showPackage:(slug)->
+    @get("models/show/packages/#{slug}")
 
 module.exports = apis = {}
 
-apis.architects = new Api(host: "http://topgrading.dev", base: "/apis/architects")
+apis.stylish = new Api()

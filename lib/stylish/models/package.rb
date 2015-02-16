@@ -30,8 +30,11 @@ module Stylish
       set_slug_from(:name)
     end
 
-    def to_hash
-      super.tap {|h| h.delete(:library) }
+    def to_hash(full=false)
+      super().tap {|h| h.delete(:library) }.tap do |h|
+        h[:manifest] = manifest if full
+        h[:root] = h[:root].to_s
+      end
     end
 
     def library

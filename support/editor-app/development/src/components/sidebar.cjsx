@@ -1,13 +1,13 @@
-module.exports = 
+module.exports = React.createClass
   displayName: "Sidebar"
   
   getDefaultProps: ->
-    launchSelector: ".ui.launch.button"
-    sidebarSelector: ".ui.sidebar"
+    launch: ".ui.launch.button"
+    element: ".ui.sidebar"
 
   componentDidMount: ->
-    $(@props.sidebarSelector).sidebar()
-    $(@props.launchSelector).on "click", => $(@props.selector).sidebar('toggle')
+    $(@props.element).sidebar()
+    $(@props.launch).on "click", => $(@props.element).sidebar('toggle')
 
   render: ->
     <div className="ui inverted vertical menu">

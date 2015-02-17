@@ -37,12 +37,14 @@ module.exports = class Application
 Application.create = (identifier, options={}, cb=(->))->
   app = window[identifier] = new Application(options)
   
-  Sidebar   = app.component("Sidebar")
-  HomePage  = app.page("HomePage") 
+  Sidebar             = app.component("Sidebar")
+  HomePage            = app.page("HomePage") 
+  PackageDetailsPage  = app.page("PackageDetailsPage")
   
   routes = (
     <Route handler={Container}>
       <DefaultRoute name="index" handler={HomePage} />
+      <Route name="package_details" path="/packages/:slug" handler={PackageDetailsPage} />
     </Route>
   )
   

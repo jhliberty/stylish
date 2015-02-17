@@ -17,6 +17,8 @@ Link          = Router.Link
 global            = if typeof(window) isnt "undefined" then window else global
 global.util       = require "./lib/util"
 sugar             = require("./sugar").globalized()
+global.stylish    = require("./apis").stylish
 
 Application = require("./lib/app")
+
 Application.create("App", name: "Stylish App", -> sugar.finish())

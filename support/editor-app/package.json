@@ -6,7 +6,7 @@
   },
   "window": {
     "frame": true,
-    "toolbar": true,
+    "toolbar": false,
     "height": 600,
     "width": 980,
     "resizable": true,

@@ -1,6 +1,7 @@
 stylish = require("../apis/index").stylish
 
 TiledGrid = require("../components/tiled_grid")
+Link = require("react-router").Link
 
 module.exports = React.createClass 
   displayName: "HomePage"
@@ -15,7 +16,9 @@ module.exports = React.createClass
 
   showPackage: (pkg)->
     <div className="ui card" key={pkg.slug}>
-      {pkg.name}
+      <Link to="package_details" params={slug: pkg.slug}>
+        {pkg.name}
+      </Link>
     </div>
 
   render: ->
@@ -24,7 +27,10 @@ module.exports = React.createClass
         <h4>Stylish Packages</h4>
       </div>
 
-      <TiledGrid perRow=4 items={@state.packages} formatter={@showPackage} itemClass="stylish-package"/>
+      <TiledGrid perRow=4 
+                 items={@state.packages} 
+                 formatter={@showPackage} 
+                 itemClass="stylish-package" />
     </div>
 
   statics:

@@ -1,4 +1,4 @@
-c = register "TiledGrid"
+register "TiledGrid"
 
 properties
   perRow: 4
@@ -32,4 +32,4 @@ view ->
     {@applyFormatter(util.chunk(@props.items, @props.perRow))}
   </div>
 
-module.exports = c.register()
+module.exports = finished() 

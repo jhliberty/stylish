@@ -1,10 +1,12 @@
-module.exports = React.createClass 
-  displayName: "Header"
+register "Header"
 
-  getDefaultProps: ->
-    title: "Stylish"
+properties
+  title: "Stylish.io"
+  tag: "h4"
 
-  render: ->
-    <div className="ui page header">
-      <h1>{@props.title}</h1>
-    </div>
+view ->
+  <div className="ui page header">
+    {React.createElement(@props.tag, {}, @props.title)}
+  </div>
+
+module.exports = finished()

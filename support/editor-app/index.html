@@ -13,25 +13,11 @@
   <link rel="stylesheet" type="text/css" href="dist/base.css">
   <script src="vendor/jquery.js"></script>
   <script src="semantic/semantic.js"></script>
-</head>
-<body id="main" class="pushable">
-  <div id="sidebar" class="ui very thin inverted vertical sidebar"></div>
-
-  <div class="pusher">
-    <div class="ui grey right attached fixed button launch">
-      <i class="content icon" ></i>
-      <span class="text">Menu</span>
-    </div>
-
-    <div id="app" class="container"></div>
-  </div>
-
   <script>
     if(typeof(process) !== "undefined") {
       window.NODE_WEBKIT = true
     }
   </script>
-
   <script>
     try {
       var path = './dist';
@@ -46,5 +32,19 @@
     }
   </script>
   <script src="dist/toolkit.js"></script>
+</head>
+<body id="main" class="pushable">
+  <div id="sidebar" class="ui very thin inverted vertical sidebar"></div>
+
+  <div class="pusher">
+    <div class="ui grey right attached fixed button launch">
+      <i class="content icon" ></i>
+      <span class="text">Menu</span>
+    </div>
+    <div id="app">
+
+    </div>
+  </div>
 </body>
+
 </html>

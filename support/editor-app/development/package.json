@@ -21,7 +21,7 @@
     "react": "latest",
     "react-treeview": "latest",
     "react-draggable": "latest",
-    "react-router": "latest",
+    "react-router-component": "latest",
     "react-tools": "latest"
   }
 }

@@ -1,27 +1,30 @@
-Router = require("react-router")
+page "PackageDetailsPage"
 
-c = register "PackageDetailsPage"
-
-state ->
-  loading: true
+state
+  loaded: false
   package: undefined
+
+properties
+  fullWidth: false
 
 events
   componentDidMount: ->
+    @fetchStateFromApi() unless @isLoaded()
+  
+  fetchStateFromApi: ->
     page = @
+    slug = @props.slug 
     
-    if @isLoading()
-      stylish.showPackage(@getParams().slug).then (pkg)->
-        page.setState(package: pkg, loading: false)
+    if slug? && _.isUndefined(@state.package)
+      stylish.showPackage slug, (pkg)->
+        page.setState(package: pkg, loaded: true)
 
 helpers 
-  mixins: [Router.State]
-
-  isLoading: ->
-    @state.loading is true
+  isLoaded: ->
+    @state.loaded is true
 
   getBody: ->
-    if @isLoading() then @loadingIndicator() else @showDetails()
+    if @isLoaded() then @showDetails() else @loadingIndicator()
   
   loadingIndicator: ->
     <div className="ui loading indicator">Loading...</div>
@@ -32,6 +35,11 @@ helpers
     <div className="ui package details">
       <div className="ui header">
         <h4>{pkg.name}</h4>
+        <pre>
+          <code>
+            {JSON.stringify(pkg)}
+          </code>
+        </pre>
       </div>
     </div>
 
@@ -40,4 +48,4 @@ view ->
     {@getBody()}  
   </div>
 
-module.exports = c.register()
+module.exports = finished() 
